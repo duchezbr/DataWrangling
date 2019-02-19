@@ -11,8 +11,6 @@ INPUTS:
         number of splits to be made to the data column
     col: str
         name of column to be split
-    col_out: str
-        name of the series that is returned with catagorical labels
     labels: bool
         True: returned series will contain catagorical labels
         False: returned series will contain the range used for binning data
@@ -23,14 +21,14 @@ OUTPUT:
 @author: duchezbr
 """
 
-def qcut_quantiles(df, q, col, col_out, labels):
+def qcut_quantiles(df, q, col, labels):
     
     if labels==True:
         q_labels = np.arange(q)
-        qcuts = pd.qcut(df[col], q, labels=q_labels)
-    
+        qcuts = pd.qcut(df[col], q, labels=q_labels) 
+        
     else:
         qcuts = pd.qcut(df[col], q)
     
-    qcuts.name=col_out                                                
+    qcuts.name='{}_{}'.format(q, col)                                                
     return qcuts
